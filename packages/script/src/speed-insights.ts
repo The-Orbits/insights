@@ -11,7 +11,26 @@ export const valueOf = (m: Pick<Metric, "name" | "value">) => (m.name === "CLS" 
 export function targetOf(m: Metric): string {
   const a = m.attribution as { target?: string; largestShiftTarget?: string; interactionTarget?: string } | undefined;
   const t = m.name === "LCP" ? a?.target : m.name === "CLS" ? a?.largestShiftTarget : m.name === "INP" ? a?.interactionTarget : undefined;
-  return (t ?? "").slice(0, 255);
+  return readable(t ?? "").slice(0, 255);
+}
+
+// A class a build tool generated: a hash of five or more letters and digits, at least one a digit, set off by _ or -
+// (next/font's Wwg0mW_variable, CSS Modules' Card_root__a1B2c, styled-components' sc-x8f2kq).
+const GENERATED = /(^|[_-])(?=[A-Za-z0-9]*\d)[A-Za-z0-9]{5,}($|[_-])/;
+
+/**
+ * web-vitals' selector as a person reads it: without <html>, which only carries the fonts' and theme's classes, and
+ * without generated class names, which change with every build.
+ */
+export function readable(selector: string) {
+  return selector
+    .split(">")
+    .filter((part, i) => !(i === 0 && /^html\b/.test(part)))
+    .map((part) => {
+      const [element = "", ...classes] = part.split(".");
+      return [element, ...classes.filter((c) => !GENERATED.test(c))].join(".");
+    })
+    .join(">");
 }
 
 const connection = () => (navigator as { connection?: { effectiveType?: string } }).connection?.effectiveType ?? "";
