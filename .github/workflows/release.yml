@@ -1,0 +1,33 @@
+# Publishes one package to npm when its tag is pushed: analytics@0.2.0 or speed-insights@0.2.0, matching the version in
+# its package.json. npm's trusted publishing (OIDC) authenticates the run, so no npm token is stored here; each package
+# names this workflow as its trusted publisher on npmjs.com. Provenance links the published package to this run.
+name: Release
+
+on:
+  push:
+    tags: ["analytics@*", "speed-insights@*"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck && bun test
+      - name: Publish the tagged package
+        run: |
+          package="${GITHUB_REF_NAME%@*}" version="${GITHUB_REF_NAME#*@}"
+          cd "packages/$package"
+          declared=$(node -p 'require("./package.json").version')
+          [ "$declared" = "$version" ] || { echo "Tag says $version, package.json says $declared"; exit 1; }
+          bun run build
+          npm publish --provenance --access public
