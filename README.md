@@ -1,11 +1,12 @@
 # Orbits Insights
 
-Analytics and Speed Insights for apps on [Orbits](https://orbits.africa).
+Analytics, Speed Insights and feature flags for apps on [Orbits](https://orbits.africa).
 
-| Package | What it measures |
+| Package | What it does |
 | --- | --- |
 | [`@useorbits/analytics`](packages/analytics) | Page views, single-page navigations included, by route, and custom events with `track()`. |
 | [`@useorbits/speed-insights`](packages/speed-insights) | Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real visits, with the element behind each slow one. |
+| [`@useorbits/flags`](packages/flags) | Feature flags, checked in your app: on for your team, a share of visitors or everyone, without a redeploy. |
 
 The packages are loaders. The code that measures and sends is in [`packages/script`](packages/script), built into
 `/_orbits/analytics.js` and `/_orbits/speed-insights.js`, which Orbits' edge serves on a project's own address once the
@@ -59,5 +60,5 @@ bun run build
 ```
 
 `packages/script/dist/*.js` is what the edge serves: copy it into orbits-backend's `infra/staging/insights/` to ship a
-change. Package releases are tags: `analytics@0.2.0` or `speed-insights@0.2.0`, matching the version in that package's
+change. Package releases are tags: `analytics@0.2.0`, `speed-insights@0.2.0` or `flags@0.1.0`, matching the version in that package's
 `package.json`. The Release workflow publishes it to npm with provenance.

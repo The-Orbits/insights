@@ -31,6 +31,10 @@
         "vue",
       ],
     },
+    "packages/flags": {
+      "name": "@useorbits/flags",
+      "version": "0.1.0",
+    },
     "packages/script": {
       "name": "@useorbits/script",
       "version": "0.2.0",
@@ -185,6 +189,8 @@
     "@types/react": ["@types/react@19.3.0", "", { "dependencies": { "csstype": "^3.2.2" } }, "sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg=="],
 
     "@useorbits/analytics": ["@useorbits/analytics@workspace:packages/analytics"],
+
+    "@useorbits/flags": ["@useorbits/flags@workspace:packages/flags"],
 
     "@useorbits/script": ["@useorbits/script@workspace:packages/script"],
 
