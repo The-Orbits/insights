@@ -1,0 +1,30 @@
+---
+// Shipped as source: Astro compiles it in the app. Its script imports the package's own build.
+import type { AnalyticsOptions } from "../dist/index";
+
+type Props = Pick<AnalyticsOptions, "mode" | "debug" | "scriptSrc" | "endpoint">;
+
+// Astro 5 names the route that served the page (/blog/[slug]); earlier versions don't, and the path stands in.
+const route = (Astro as { routePattern?: string }).routePattern ?? Astro.url.pathname;
+---
+
+<orbits-analytics data-options={JSON.stringify(Astro.props)} data-route={route} data-path={Astro.url.pathname}></orbits-analytics>
+
+<script>
+  import { inject, pageview } from "../dist/index.js";
+
+  // A new element on every page, View Transitions included, so each one counts a page view.
+  customElements.define(
+    "orbits-analytics",
+    class extends HTMLElement {
+      connectedCallback() {
+        try {
+          inject({ ...JSON.parse(this.dataset.options ?? "{}"), autoTrack: false, beforeSend: window.orbitsAnalyticsBeforeSend });
+          pageview({ route: this.dataset.route, path: this.dataset.path });
+        } catch (err) {
+          console.error("[Orbits Analytics]", err);
+        }
+      }
+    },
+  );
+</script>

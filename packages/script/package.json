@@ -1,0 +1,12 @@
+{
+  "name": "@useorbits/script",
+  "version": "0.2.0",
+  "private": true,
+  "description": "The scripts Orbits' edge serves at /_orbits/analytics.js and /_orbits/speed-insights.js; orbits-backend vendors dist/.",
+  "type": "module",
+  "dependencies": { "web-vitals": "^5.1.0" },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json"
+  }
+}
