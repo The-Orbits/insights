@@ -1,5 +1,5 @@
 {
-  "name": "@theorbits/analytics",
+  "name": "@useorbits/analytics",
   "version": "0.1.0",
   "description": "Privacy-friendly page views for apps on Orbits: no cookies, nothing personal stored.",
   "license": "MIT",

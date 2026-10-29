@@ -1,3 +1,3 @@
-# @theorbits/analytics
+# @useorbits/analytics
 
 See the [Orbits Insights README](https://github.com/the-orbits/insights#readme).

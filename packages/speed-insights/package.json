@@ -1,5 +1,5 @@
 {
-  "name": "@theorbits/speed-insights",
+  "name": "@useorbits/speed-insights",
   "version": "0.1.0",
   "description": "Core Web Vitals from real visits to apps on Orbits.",
   "license": "MIT",

@@ -4,21 +4,21 @@ Analytics and Speed Insights for apps on [Orbits](https://orbits.africa).
 
 | Package | What it sends |
 | --- | --- |
-| [`@theorbits/analytics`](packages/analytics) | A page view for each page a visitor sees, including a single-page app's own navigations. |
-| [`@theorbits/speed-insights`](packages/speed-insights) | Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real visits, measured with Google's [`web-vitals`](https://github.com/GoogleChrome/web-vitals). |
+| [`@useorbits/analytics`](packages/analytics) | A page view for each page a visitor sees, including a single-page app's own navigations. |
+| [`@useorbits/speed-insights`](packages/speed-insights) | Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real visits, measured with Google's [`web-vitals`](https://github.com/GoogleChrome/web-vitals). |
 
 Both send a small `GET /_orbits/e` beacon to your site's own address, which Orbits' edge answers. No cookies are set, nothing is sent from `localhost`, and Orbits keeps neither the visitor's IP address nor their browser: a visitor is a hash that changes every day. Turn the pages on in your project's **Analytics** and **Speed Insights** tabs.
 
 ## Next.js
 
 ```sh
-npm install @theorbits/analytics @theorbits/speed-insights
+npm install @useorbits/analytics @useorbits/speed-insights
 ```
 
 ```tsx
 // app/layout.tsx
-import { Analytics } from "@theorbits/analytics/next";
-import { SpeedInsights } from "@theorbits/speed-insights/next";
+import { Analytics } from "@useorbits/analytics/next";
+import { SpeedInsights } from "@useorbits/speed-insights/next";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -36,8 +36,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ## React (Vite, React Router, …)
 
 ```tsx
-import { Analytics } from "@theorbits/analytics/react";
-import { SpeedInsights } from "@theorbits/speed-insights/react";
+import { Analytics } from "@useorbits/analytics/react";
+import { SpeedInsights } from "@useorbits/speed-insights/react";
 
 // once, near the root
 <Analytics />
@@ -47,8 +47,8 @@ import { SpeedInsights } from "@theorbits/speed-insights/react";
 ## Anything else (Vue, Svelte, Astro, plain HTML)
 
 ```ts
-import { inject } from "@theorbits/analytics";
-import { injectSpeedInsights } from "@theorbits/speed-insights";
+import { inject } from "@useorbits/analytics";
+import { injectSpeedInsights } from "@useorbits/speed-insights";
 
 inject();
 injectSpeedInsights();
