@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { start, targetOf, valueOf } from "./speed-insights";
+import { readable, start, targetOf, valueOf } from "./speed-insights";
 import { fakeBrowser } from "./test-browser";
 
 type Metric = { name: string; value: number; attribution?: Record<string, unknown> };
@@ -75,5 +75,15 @@ describe("the speed insights script", () => {
     expect(valueOf({ name: "CLS", value: 0.1 })).toBe("0.1000");
     expect(targetOf({ name: "FCP", value: 1, attribution: { target: "x" } } as never)).toBe("");
     expect(targetOf({ name: "LCP", value: 1, attribution: { target: "y".repeat(300) } } as never)).toHaveLength(255);
+  });
+
+  it("names elements as a person would, without <html> or class names a build tool generated", () => {
+    expect(readable("html.Wwg0mW_variable._38x53q_variable>body.ground>main.page>section.intro.panel>h1.reveal.title"))
+      .toBe("body.ground>main.page>section.intro.panel>h1.reveal.title");
+    expect(readable("div.Card_root__a1B2c.featured>img")).toBe("div.featured>img");
+    expect(readable("button.sc-x8f2kq.pay#checkout")).toBe("button.pay#checkout");
+    // Ordinary names and short utility classes stay.
+    expect(readable("main.grid-cols-12.w-1/2>a.product-card")).toBe("main.grid-cols-12.w-1/2>a.product-card");
+    expect(readable("div.html-preview>p")).toBe("div.html-preview>p");
   });
 });
