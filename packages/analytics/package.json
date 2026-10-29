@@ -1,6 +1,6 @@
 {
   "name": "@useorbits/analytics",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Privacy-friendly page views for apps on Orbits: no cookies, nothing personal stored.",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/the-orbits/insights.git", "directory": "packages/analytics" },

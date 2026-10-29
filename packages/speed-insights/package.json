@@ -1,6 +1,6 @@
 {
   "name": "@useorbits/speed-insights",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Core Web Vitals from real visits to apps on Orbits.",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/the-orbits/insights.git", "directory": "packages/speed-insights" },
