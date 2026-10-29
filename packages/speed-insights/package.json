@@ -1,9 +1,9 @@
 {
   "name": "@useorbits/speed-insights",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Core Web Vitals from real visits to apps on Orbits.",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/the-orbits/insights.git", "directory": "packages/speed-insights" },
+  "repository": { "type": "git", "url": "git+https://github.com/The-Orbits/insights.git", "directory": "packages/speed-insights" },
   "homepage": "https://orbits.africa",
   "keywords": ["web vitals", "performance", "orbits", "lcp", "inp", "cls"],
   "type": "module",
