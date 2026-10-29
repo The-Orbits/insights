@@ -1,6 +1,6 @@
 {
   "name": "@useorbits/analytics",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Privacy-friendly page views and custom events for apps on Orbits: no cookies, nothing personal stored.",
   "license": "MIT",
   "repository": {
@@ -14,7 +14,8 @@
     "orbits",
     "privacy",
     "page views",
-    "events"
+    "events",
+    "astro-component"
   ],
   "type": "module",
   "sideEffects": false,
@@ -48,8 +49,8 @@
     },
     "./sveltekit": {
       "types": "./dist/sveltekit.d.ts",
-      "import": "./dist/sveltekit.js",
-      "require": "./dist/sveltekit.cjs"
+      "svelte": "./dist/sveltekit.js",
+      "import": "./dist/sveltekit.js"
     },
     "./astro": "./astro/Analytics.astro",
     "./package.json": "./package.json"
@@ -58,7 +59,8 @@
     "react": ">=18",
     "next": ">=13",
     "vue": ">=3",
-    "@sveltejs/kit": ">=1"
+    "@sveltejs/kit": ">=1",
+    "astro": ">=4"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -71,6 +73,9 @@
       "optional": true
     },
     "@sveltejs/kit": {
+      "optional": true
+    },
+    "astro": {
       "optional": true
     }
   },
