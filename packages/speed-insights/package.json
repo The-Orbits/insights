@@ -1,28 +1,86 @@
 {
   "name": "@useorbits/speed-insights",
-  "version": "0.1.2",
-  "description": "Core Web Vitals from real visits to apps on Orbits.",
+  "version": "0.2.0",
+  "description": "Core Web Vitals from real visits to apps on Orbits, with the element behind each slow one.",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/The-Orbits/insights.git", "directory": "packages/speed-insights" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-Orbits/insights.git",
+    "directory": "packages/speed-insights"
+  },
   "homepage": "https://orbits.africa",
-  "keywords": ["web vitals", "performance", "orbits", "lcp", "inp", "cls"],
+  "keywords": [
+    "web vitals",
+    "performance",
+    "orbits",
+    "lcp",
+    "inp",
+    "cls"
+  ],
   "type": "module",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "astro"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" },
-    "./react": { "types": "./dist/react.d.ts", "import": "./dist/react.js", "require": "./dist/react.cjs" },
-    "./next": { "types": "./dist/next.d.ts", "import": "./dist/next.js", "require": "./dist/next.cjs" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./next": {
+      "types": "./dist/next.d.ts",
+      "import": "./dist/next.js",
+      "require": "./dist/next.cjs"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js",
+      "require": "./dist/vue.cjs"
+    },
+    "./sveltekit": {
+      "types": "./dist/sveltekit.d.ts",
+      "import": "./dist/sveltekit.js",
+      "require": "./dist/sveltekit.cjs"
+    },
+    "./astro": "./astro/SpeedInsights.astro",
+    "./package.json": "./package.json"
   },
-  "dependencies": { "web-vitals": "^5.1.0" },
-  "peerDependencies": { "react": ">=18" },
-  "peerDependenciesMeta": { "react": { "optional": true } },
+  "peerDependencies": {
+    "react": ">=18",
+    "next": ">=13",
+    "vue": ">=3",
+    "@sveltejs/kit": ">=1"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "next": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    },
+    "@sveltejs/kit": {
+      "optional": true
+    }
+  },
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc -p tsconfig.json"
   },
-  "publishConfig": { "access": "public", "provenance": true }
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }

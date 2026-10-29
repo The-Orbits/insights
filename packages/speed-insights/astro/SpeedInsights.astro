@@ -1,0 +1,33 @@
+---
+// Shipped as source: Astro compiles it in the app. Its script imports the package's own build.
+import type { SpeedInsightsOptions } from "../dist/index";
+
+type Props = Pick<SpeedInsightsOptions, "mode" | "debug" | "sampleRate" | "scriptSrc" | "endpoint">;
+
+// Astro 5 names the route that served the page (/blog/[slug]); earlier versions don't, and the path stands in.
+const route = (Astro as { routePattern?: string }).routePattern ?? Astro.url.pathname;
+---
+
+<orbits-speed-insights data-options={JSON.stringify(Astro.props)} data-route={route}></orbits-speed-insights>
+
+<script>
+  import { injectSpeedInsights } from "../dist/index.js";
+
+  // Vitals belong to a page load; with View Transitions, the first element starts measuring and later ones only
+  // name their route.
+  let setRoute: ((route: string | null) => void) | undefined;
+  customElements.define(
+    "orbits-speed-insights",
+    class extends HTMLElement {
+      connectedCallback() {
+        try {
+          if (setRoute) return setRoute(this.dataset.route ?? null);
+          const options = JSON.parse(this.dataset.options ?? "{}");
+          setRoute = injectSpeedInsights({ ...options, route: this.dataset.route, beforeSend: window.orbitsSpeedInsightsBeforeSend })?.setRoute;
+        } catch (err) {
+          console.error("[Orbits Speed Insights]", err);
+        }
+      }
+    },
+  );
+</script>

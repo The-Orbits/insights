@@ -2,12 +2,19 @@
 
 Analytics and Speed Insights for apps on [Orbits](https://orbits.africa).
 
-| Package | What it sends |
+| Package | What it measures |
 | --- | --- |
-| [`@useorbits/analytics`](packages/analytics) | A page view for each page a visitor sees, including a single-page app's own navigations. |
-| [`@useorbits/speed-insights`](packages/speed-insights) | Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real visits, measured with Google's [`web-vitals`](https://github.com/GoogleChrome/web-vitals). |
+| [`@useorbits/analytics`](packages/analytics) | Page views, single-page navigations included, by route, and custom events with `track()`. |
+| [`@useorbits/speed-insights`](packages/speed-insights) | Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real visits, with the element behind each slow one. |
 
-Both send a small `GET /_orbits/e` beacon to your site's own address, which Orbits' edge answers. No cookies are set, nothing is sent from `localhost`, and Orbits keeps neither the visitor's IP address nor their browser: a visitor is a hash that changes every day. Turn the pages on in your project's **Analytics** and **Speed Insights** tabs.
+The packages are loaders. The code that measures and sends is in [`packages/script`](packages/script), built into
+`/_orbits/analytics.js` and `/_orbits/speed-insights.js`, which Orbits' edge serves on a project's own address once the
+feature is on, for production deployments only. A change to what's measured ships with Orbits, without anyone updating
+a package.
+
+No cookies are set, nothing is sent in development, and Orbits keeps neither the visitor's IP address nor their
+browser: a visitor is a hash that changes every day. Turn the pages on in your project's **Analytics** and
+**Speed Insights** tabs.
 
 ## Next.js
 
@@ -33,36 +40,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-## React (Vite, React Router, …)
+There are components for React (`/react`), Vue (`/vue`), SvelteKit (`/sveltekit`) and Astro (`/astro`), and
+`inject()` / `injectSpeedInsights()` for anything else. A site without a bundler can add the scripts directly:
 
-```tsx
-import { Analytics } from "@useorbits/analytics/react";
-import { SpeedInsights } from "@useorbits/speed-insights/react";
-
-// once, near the root
-<Analytics />
-<SpeedInsights />
+```html
+<script defer src="/_orbits/analytics.js"></script>
+<script defer src="/_orbits/speed-insights.js"></script>
 ```
 
-## Anything else (Vue, Svelte, Astro, plain HTML)
-
-```ts
-import { inject } from "@useorbits/analytics";
-import { injectSpeedInsights } from "@useorbits/speed-insights";
-
-inject();
-injectSpeedInsights();
-```
-
-Call them once in code that runs in the browser (in SvelteKit, `onMount` in the root layout; in Astro, a `<script>` in the layout).
-
-## Options
-
-| Option | Packages | Default | |
-| --- | --- | --- | --- |
-| `debug` | both | `false` | Also send from `localhost`, and log each beacon to the console. |
-| `endpoint` | both | `/_orbits/e` | Where beacons go. |
-| `sampleRate` | speed-insights | `1` | The share of page loads that report, 0 to 1. |
+Each package's README has the details: custom events, `beforeSend`, sampling.
 
 ## Developing
 
@@ -72,4 +58,6 @@ bun test
 bun run build
 ```
 
-Releases are tags: `analytics@0.2.0` or `speed-insights@0.2.0`, matching the version in that package's `package.json`. The Release workflow publishes it to npm with provenance.
+`packages/script/dist/*.js` is what the edge serves: copy it into orbits-backend's `infra/staging/insights/` to ship a
+change. Package releases are tags: `analytics@0.2.0` or `speed-insights@0.2.0`, matching the version in that package's
+`package.json`. The Release workflow publishes it to npm with provenance.
