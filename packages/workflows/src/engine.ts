@@ -76,6 +76,17 @@ class NonDeterministic extends Error {
   name = "NonDeterministic";
 }
 
+/** What Orbits keeps as a step's name: printable text, up to 64 characters, without space at either end. */
+export function checkName(name: string): string {
+  if (typeof name !== "string" || !/^\S(?:[^\x00-\x1f\x7f]{0,62}\S)?$/.test(name)) {
+    throw new Error(`A step's name is up to 64 characters of text, without space at either end: ${JSON.stringify(name)} isn't one`);
+  }
+  return name;
+}
+
+/** A default name, cut to fit. */
+const fit = (name: string) => name.slice(0, 64).trimEnd();
+
 /**
  * One call: replays `handler` against the steps already done and returns what happened next. `now` decides when a
  * sleep ends.
@@ -88,6 +99,7 @@ export async function execute<I>(handler: Handler<I>, call: { input: I; run: { i
   const replay = (name: string, kind: DoneStep["kind"]): DoneStep | undefined => {
     // Once a call has something new, it's over: code that caught the pause and went on doesn't run anything else.
     if (paused) throw new Pause(paused);
+    checkName(name);
     const done = call.steps[at];
     if (!done) return undefined;
     if (done.name !== name || done.kind !== kind) {
@@ -120,12 +132,12 @@ export async function execute<I>(handler: Handler<I>, call: { input: I; run: { i
       return pause({ type: "step", name, output: JSON.stringify(value ?? null), detail: describe(value), ms: now() - started });
     },
     async sleep(duration: string | number, name?: string) {
-      const label = name ?? `sleep ${duration}`;
+      const label = name ?? fit(`sleep ${duration}`);
       if (replay(label, "sleep")) return;
       pause({ type: "sleep", name: label, until: new Date(now() + durationMs(duration)).toISOString() });
     },
     async waitFor<T>(event: string, options: { timeout?: string | number; name?: string } = {}) {
-      const label = options.name ?? `wait for ${event}`;
+      const label = options.name ?? fit(`wait for ${event}`);
       const done = replay(label, "wait");
       if (done) return parse(done.output) as T | null;
       return pause({
