@@ -1,6 +1,6 @@
 {
   "name": "@useorbits/workflows",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Durable workflows for apps on Orbits: steps that survive crashes and deploys, retries, sleeps and events, without a queue to run.",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/The-Orbits/insights.git", "directory": "packages/workflows" },

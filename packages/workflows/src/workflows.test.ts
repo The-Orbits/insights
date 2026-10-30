@@ -79,6 +79,18 @@ describe("a call", () => {
     expect(await execute(greedy.handler, call([]), now)).toMatchObject({ type: "step", name: "one" });
     expect(ran).toEqual(["one"]);
   });
+
+  it("fails a run whose step name Orbits couldn't keep, and fits its own names", async () => {
+    const named = (name: string) => workflow("named", {}, async ({ step }) => step(name, () => 1));
+    for (const bad of ["", " padded", "x".repeat(65), "line\nbreak"]) {
+      const result = (await execute(named(bad).handler, call([]), now)) as Extract<Result, { type: "failed" }>;
+      expect(result.type).toBe("failed");
+      expect(result.error[0]).toContain("A step's name is up to 64 characters");
+    }
+    expect(await execute(named("Charge card: ₦8,500").handler, call([]), now)).toMatchObject({ type: "step", name: "Charge card: ₦8,500" });
+    const long = workflow("long", {}, async ({ waitFor }) => waitFor(`order.${"x".repeat(80)}`));
+    expect(((await execute(long.handler, call([]), now)) as { name: string }).name).toHaveLength(64);
+  });
 });
 
 describe("the endpoint", () => {
