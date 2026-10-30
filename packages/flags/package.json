@@ -1,6 +1,6 @@
 {
   "name": "@useorbits/flags",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Feature flags for apps on Orbits: switch code on for your team, a share of visitors or everyone, without a redeploy.",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/The-Orbits/insights.git", "directory": "packages/flags" },

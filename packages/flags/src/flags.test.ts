@@ -77,7 +77,8 @@ describe("the client", () => {
     expect(api.calls[0]!.url).toBe("https://api.example/v1/flags/definitions");
     api.change({ "new-checkout": boolean({ on: true }) });
     expect(await client.flag("new-checkout")).toBe(false); // the held set answers while the new one loads
-    await new Promise((r) => setTimeout(r, 0));
+    // The new set lands in the background; give it the ticks it takes rather than assume one.
+    for (let i = 0; i < 50 && !(await client.flag("new-checkout")); i++) await new Promise((r) => setTimeout(r, 1));
     expect(await client.flag("new-checkout")).toBe(true);
     expect(api.calls.some((c) => c.headers["if-none-match"] === '"v1"')).toBe(true);
     expect(await client.all()).toEqual({ "new-checkout": true });
