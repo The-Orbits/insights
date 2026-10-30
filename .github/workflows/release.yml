@@ -5,7 +5,7 @@ name: Release
 
 on:
   push:
-    tags: ["analytics@*", "speed-insights@*", "flags@*"]
+    tags: ["analytics@*", "speed-insights@*", "flags@*", "workflows@*"]
 
 permissions:
   contents: read

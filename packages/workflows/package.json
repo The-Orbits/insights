@@ -1,0 +1,24 @@
+{
+  "name": "@useorbits/workflows",
+  "version": "0.1.0",
+  "description": "Durable workflows for apps on Orbits: steps that survive crashes and deploys, retries, sleeps and events, without a queue to run.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/The-Orbits/insights.git", "directory": "packages/workflows" },
+  "homepage": "https://orbits.africa",
+  "keywords": ["workflows", "durable", "background jobs", "cron", "orbits"],
+  "type": "module",
+  "sideEffects": false,
+  "files": ["dist"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "publishConfig": { "access": "public", "provenance": true }
+}

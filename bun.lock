@@ -60,6 +60,10 @@
         "vue",
       ],
     },
+    "packages/workflows": {
+      "name": "@useorbits/workflows",
+      "version": "0.1.0",
+    },
   },
   "packages": {
     "@babel/helper-string-parser": ["@babel/helper-string-parser@7.29.11", "", {}, "sha512-snZbO7MEDOof+hvNa97EjEY7qD7h2kwvQr5AJC3ZhQudKW5dnej6k3kP9NQV88hJwaS8vDqRLFo9rivLEhle2g=="],
@@ -195,6 +199,8 @@
     "@useorbits/script": ["@useorbits/script@workspace:packages/script"],
 
     "@useorbits/speed-insights": ["@useorbits/speed-insights@workspace:packages/speed-insights"],
+
+    "@useorbits/workflows": ["@useorbits/workflows@workspace:packages/workflows"],
 
     "@vue/compiler-core": ["@vue/compiler-core@3.5.44", "", { "dependencies": { "@babel/parser": "^7.29.9", "@vue/shared": "3.5.44", "entities": "^7.0.1", "estree-walker": "^2.0.2", "source-map-js": "^1.2.2" } }, "sha512-k34nCytbK8PQ1gR2mGROYOw6Pnv/mumqIdrZ3x2tbyXZDWm7ViKGLTfdB+DRrWqEQsLgGJvn0WN9jBif5zCTLQ=="],
 
