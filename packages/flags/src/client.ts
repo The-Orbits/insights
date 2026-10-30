@@ -95,7 +95,7 @@ export class FlagsClient {
       return null;
     }
     if (!this.current) await this.load();
-    else if (Date.now() - this.fetchedAt > this.refreshMs) void this.load();
+    else if (Date.now() - this.fetchedAt >= this.refreshMs) void this.load();
     return this.current;
   }
 
